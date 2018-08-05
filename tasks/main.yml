@@ -5,3 +5,10 @@
     - "{{ ansible_distribution }}-{{ ansible_distribution_major_version}}.yml"
     - "{{ ansible_distribution }}.yml"
   tags: vars
+
+- name: Ensures 3proxy service is started and enabled
+  service:
+    name: 3proxy
+    enabled: true
+    state: started
+  ignore_errors: true

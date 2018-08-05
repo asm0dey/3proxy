@@ -1,2 +1,5 @@
 ---
-# handlers file for 3proxy
+- name: Ensures 3proxy service config is up to date
+  service:
+    name: 3proxy
+    state: restarted

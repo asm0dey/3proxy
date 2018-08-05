@@ -20,17 +20,4 @@
     dest: /etc/3proxy/3proxy.cfg
     owner: nobody
     group: nogroup
-  register: config_changed
-
-- name: Ensures 3proxy service is started and enabled
-  service:
-    name: 3proxy
-    enabled: true
-    state: started
-  ignore_errors: true
-
-- name: Ensures 3proxy service config is up to date
-  service:
-    name: 3proxy
-    state: restarted
-  when: config_changed.changed
+  notify: Ensures 3proxy service config is up to date
