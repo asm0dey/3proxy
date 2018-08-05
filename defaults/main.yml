@@ -1,0 +1,8 @@
+---
+proxy_users: []
+proxy_socks: true
+proxy_socks_port: 1080
+proxy_socks_options: ""
+proxy_http: true
+proxy_http_port: 3128
+proxy_http_options: ""

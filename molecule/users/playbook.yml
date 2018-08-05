@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: 3proxy
+      proxy_users:
+        - { name: "asm0dey", hash: "$1$pL3Ho94u$2.wCxrLfacj82UMPJSy/6/" }
+        - { name: "asm0dey2", hash: "$1$pL3Ho94u$2.wCxrLfacj82UMPJSy/6/" }

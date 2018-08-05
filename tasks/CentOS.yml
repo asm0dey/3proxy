@@ -1,0 +1,36 @@
+---
+- name: Ensures EPEL repo is installed
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+
+- name: Ensures 3proxy is installed
+  yum:
+    name: 3proxy
+    state: present
+    enablerepo: epel
+    disable_gpg_check: true
+
+- name: Ensures 3proxy log dir exists
+  file:
+    name: /var/log/3proxy
+    state: directory
+
+- name: Configures 3proxy
+  template:
+    src: 3proxy.cfg.j2
+    dest: /etc/3proxy.cfg
+  register: config_changed
+
+- name: Ensures 3proxy service is started and enabled
+  service:
+    name: 3proxy
+    enabled: true
+    state: started
+
+- name: Ensures 3proxy service config is up to date
+  service:
+    name: 3proxy
+    state: restarted
+  when: config_changed.changed

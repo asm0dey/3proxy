@@ -1,0 +1,26 @@
+{% if ansible_distribution != 'Ubuntu' %}daemon{% endif %}
+
+nserver 8.8.8.8
+nserver 8.8.4.4
+nscache 65536
+log /var/log/3proxy/access.log D
+rotate 30
+archiver gz /bin/gzip %F
+
+{% if proxy_users | length > 0 %}
+auth strong
+{% endif %}
+
+external {{ ansible_default_ipv4["address"] }}
+
+{% if proxy_users | length > 0 %}
+users {% for user in proxy_users %}"{{ user.name }}:CR:{{ user.hash }}" {% endfor %}
+{% endif %}
+
+{% if proxy_socks %}
+socks -p{{ proxy_socks_port }} {{ proxy_socks_options }}
+{% endif %}
+
+{% if proxy_http %}
+proxy -p{{ proxy_http_port }} {{ proxy_http_options }}
+{% endif %}
