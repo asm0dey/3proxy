@@ -6,6 +6,7 @@
 - name: Ensures 3proxy is installed
   apt:
     name: 3proxy
+    update_cache: true
 
 - name: Ensures 3proxy log dir exists
   file:
@@ -20,4 +21,4 @@
     dest: /etc/3proxy/3proxy.cfg
     owner: nobody
     group: nogroup
-  notify: Ensures 3proxy service config is up to date
+  notify: "reload service"

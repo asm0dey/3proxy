@@ -6,6 +6,15 @@
     - "{{ ansible_distribution }}.yml"
   tags: vars
 
+- name: Set log directory writable for 3proxy if needed
+  ini_file:
+    path: /lib/systemd/system/3proxy.service
+    section: Service
+    option: ReadWritePaths
+    value: /var/log/3proxy
+  when: ansible_service_mgr == 'systemd'
+  notify: reload service
+
 - name: Ensures 3proxy service is started and enabled
   service:
     name: 3proxy

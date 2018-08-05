@@ -1,5 +1,12 @@
 ---
+- name: Reloads systemd daemon
+  systemd:
+    daemon_reload: true
+  when: ansible_service_mgr == 'systemd'
+  listen: "reload service"
+
 - name: Ensures 3proxy service config is up to date
   service:
     name: 3proxy
     state: restarted
+  listen: "reload service"

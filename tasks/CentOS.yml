@@ -21,4 +21,4 @@
   template:
     src: 3proxy.cfg.j2
     dest: /etc/3proxy.cfg
-  notify: Ensures 3proxy service config is up to date
+  notify: "reload service"
