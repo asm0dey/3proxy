@@ -1,48 +1,44 @@
-Role Name
+3proxy
 =========
 
-A brief description of the role goes here.
-
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the boto package is required.
+In our hard time everyone needs a bit more security. This role helps you install fast and powerful 3proxy proxy server
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.) should
-be mentioned here as well.
+| name                | description                                                            |
+|---------------------|------------------------------------------------------------------------|
+| proxy_users         | array of users whch shold have access to proxy (otherwise anybody can) |
+| proxy_socks         | enable socks proxy (true by default)                                   |
+| proxy_socks_port    | socks proxy port (1080 be default)                                     |
+| proxy_socks_options | additional socks proxy options                                         |
+| proxy_http          | enable http proxy (true by default)                                    |
+| proxy_http_port     | http proxy port (3128 be default)                                      |
+| proxy_http_options  | additional http proxy options                                          |
 
-Dependencies
-------------
+Proxy users
+-----------
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables that
-are used from other roles.
+Proxy user is an object, which consists of 2 fields:
+
+| name | description          |
+|------|----------------------|
+| name | username             |
+| hash | hash of the password |
+
+Hash can be obtained from command `openssl passwd -1 'yourcomplexpasswordHere'`
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+    - hosts: all
       roles:
-         - { role: 3proxy, x: 42 }
+        - role: 3proxy
+          proxy_users:
+            - { name: "asm0dey", hash: "$1$pL3Ho94u$2.wCxrLfacj82UMPJSy/6/" }
+            - { name: "asm0dey2", hash: "$1$pL3Ho94u$2.wCxrLfacj82UMPJSy/6/" }
 
 License
 -------
 
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).
+MIT
