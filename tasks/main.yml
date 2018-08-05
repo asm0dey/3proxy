@@ -6,9 +6,16 @@
     - "{{ ansible_distribution }}.yml"
   tags: vars
 
+- name: get info about 3proxy service
+  systemd:
+    name: 3proxy.service
+    enabled: true
+  when: ansible_service_mgr == 'systemd'
+  register: proxy_info
+
 - name: Set log directory writable for 3proxy if needed
   ini_file:
-    path: /lib/systemd/system/3proxy.service
+    path: "{{ proxy_info.status.FragmentPath }}"
     section: Service
     option: ReadWritePaths
     value: /var/log/3proxy
