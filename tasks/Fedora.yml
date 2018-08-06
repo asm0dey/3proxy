@@ -1,0 +1,16 @@
+---
+- name: Ensures 3proxy is installed
+  dnf:
+    name: 3proxy
+    state: present
+
+- name: Ensures 3proxy log dir exists
+  file:
+    name: /var/log/3proxy
+    state: directory
+
+- name: Configures 3proxy
+  template:
+    src: 3proxy.cfg.j2
+    dest: /etc/3proxy.cfg
+  notify: "reload service"
