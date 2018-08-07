@@ -10,3 +10,18 @@
     name: 3proxy
     state: restarted
   listen: "reload service"
+
+- name: restart iptables
+  service:
+    name: iptables
+    state: restarted
+
+- name: restart firewalld
+  service:
+    name: firewalld
+    state: restarted
+
+- name: restart ufw
+  service:
+    name: ufw
+    state: restarted
