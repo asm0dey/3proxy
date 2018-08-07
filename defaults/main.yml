@@ -6,3 +6,4 @@ proxy_socks_options: ""
 proxy_http: true
 proxy_http_port: 3128
 proxy_http_options: ""
+manage_firewall: true

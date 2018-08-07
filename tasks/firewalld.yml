@@ -1,0 +1,12 @@
+---
+- name: Ensures firewalld socks port is open
+  firewalld:
+    state: enabled
+    zone: public
+    port: "{{ item.item }}/tcp"
+    permanent: true
+    immediate: false
+  when: item.if
+  with_items:
+    - { item: "{{ proxy_socks_port }}", if: "{{ proxy_socks }}" }
+    - { item: "{{ proxy_http_port }}", if: "{{ proxy_http }}" }

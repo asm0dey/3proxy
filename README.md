@@ -15,6 +15,7 @@ Role Variables
 | proxy_http          | enable http proxy (true by default)                                    |
 | proxy_http_port     | http proxy port (3128 be default)                                      |
 | proxy_http_options  | additional http proxy options                                          |
+| manage_firewall     | If role should try to allow incoming connections to proxy on firewall  | 
 
 Proxy users
 -----------

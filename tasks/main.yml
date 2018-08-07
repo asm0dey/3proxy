@@ -28,3 +28,7 @@
     enabled: true
     state: started
   ignore_errors: true
+
+- name: Detect firewall type
+  include_tasks: firewall.yml
+  when: manage_firewall

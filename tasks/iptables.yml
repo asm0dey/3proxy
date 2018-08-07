@@ -1,0 +1,15 @@
+---
+- name: Ensures iptables allow incoming traffic to 3proxy ports
+  iptables:
+    ctstate: "{{ item[1].ctstate }}"
+    destination_port: "{{ item[0] }}"
+    chain: "{{ item[1].chain }}"
+    protocol: tcp
+    jump: ACCEPT
+  with_nested:
+    - [ "{{ proxy_socks_port }}", "{{ proxy_http_port }}" ]
+    - [ { ctstate: [ "NEW", "ESTABLISHED" ], chain: "INPUT" }, { ctstate: [ "ESTABLISHED" ], chain: "OUTPUT" } ]
+
+- name: Some
+  debug:
+    var: ansible_service_mgr

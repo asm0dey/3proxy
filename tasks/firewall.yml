@@ -1,0 +1,39 @@
+---
+# Everything here is borrowed from kyl191/ansible-role-openvpn and adapted for 3proxy
+- name: Check for firewalld
+  command: which firewall-cmd
+  register: firewalld
+  check_mode: false
+  changed_when: false  # Never report as changed
+  ignore_errors: true
+
+- name: Check for ufw
+  command: which ufw
+  register: ufw
+  check_mode: false
+  changed_when: false  # Never report as changed
+  ignore_errors: true
+
+- name: Check for iptables
+  command: which iptables
+  register: iptables
+  check_mode: false
+  changed_when: false  # Never report as changed
+  ignore_errors: true
+
+- name: Fail on both firewalld & ufw
+  fail:
+    msg: "Both FirewallD and UFW are detected, firewall situation is unknown"
+  when: firewalld.rc == 0 and ufw.rc == 0
+
+- name: Add port rules (iptables)
+  include: iptables.yml
+  when: firewalld.rc != 0 and ufw.rc != 0 and iptables.rc == 0
+
+- name: Add port rules (firewalld)
+  include: firewalld.yml
+  when: firewalld.rc == 0 and ufw.rc != 0
+
+- name: Add port rules (ufw)
+  include: ufw.yml
+  when: firewalld.rc != 0 and ufw.rc == 0
