@@ -1,0 +1,11 @@
+---
+command:
+  iptables -S:
+    exit-status: 0
+    stdout:
+      - -A INPUT -p tcp -m tcp --dport 1080 -m conntrack --ctstate NEW,ESTABLISHED -m comment --comment "ansible[Allow INPUT for port 1080]" -j ACCEPT
+      - -A INPUT -p tcp -m tcp --dport 3128 -m conntrack --ctstate NEW,ESTABLISHED -m comment --comment "ansible[Allow INPUT for port 3128]" -j ACCEPT
+      - -A OUTPUT -p tcp -m tcp --dport 1080 -m conntrack --ctstate ESTABLISHED -m comment --comment "ansible[Allow OUTPUT for port 1080]" -j ACCEPT
+      - -A OUTPUT -p tcp -m tcp --dport 3128 -m conntrack --ctstate ESTABLISHED -m comment --comment "ansible[Allow OUTPUT for port 3128]" -j ACCEPT
+    stderr: []
+    timeout: 10000

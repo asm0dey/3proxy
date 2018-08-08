@@ -1,4 +1,8 @@
 ---
+- name: Installs libselinux-python
+  package:
+    name: libselinux-python
+
 - name: Ensures EPEL repo is installed
   yum_repository:
     name: epel

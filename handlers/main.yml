@@ -15,6 +15,7 @@
   service:
     name: iptables
     state: restarted
+  listen: update iptables
 
 - name: restart firewalld
   service:

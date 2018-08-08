@@ -1,4 +1,8 @@
 ---
+- name: Installs libselinux-python
+  package:
+    name: libselinux-python
+
 - name: Ensures 3proxy is installed
   dnf:
     name: 3proxy

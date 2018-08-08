@@ -1,15 +1,10 @@
 ---
-- name: Ensures iptables allow incoming traffic to 3proxy ports
-  iptables:
-    ctstate: "{{ item[1].ctstate }}"
-    destination_port: "{{ item[0] }}"
-    chain: "{{ item[1].chain }}"
-    protocol: tcp
-    jump: ACCEPT
+- name: Enable iptables rules
+  iptables_raw:
+    rules: "-A {{ item[1].chain }} -p tcp --dport {{ item[0].value }} -m conntrack --ctstate {{ item[1].ctstate }} -j ACCEPT"
+    name: "Allow {{ item[1].chain }} for port {{ item[0].value }}"
   with_nested:
-    - [ "{{ proxy_socks_port }}", "{{ proxy_http_port }}" ]
-    - [ { ctstate: [ "NEW", "ESTABLISHED" ], chain: "INPUT" }, { ctstate: [ "ESTABLISHED" ], chain: "OUTPUT" } ]
-
-- name: Some
-  debug:
-    var: ansible_service_mgr
+    - [ { value: "{{ proxy_socks_port }}", if: "{{ proxy_socks }}" }, { value: "{{ proxy_http_port }}", if: "{{ proxy_http }}" } ]
+    - [ { ctstate: "NEW,ESTABLISHED", chain: "INPUT", }, { ctstate: "ESTABLISHED", chain: "OUTPUT" } ]
+  notify: update iptables
+  when: item[0].if

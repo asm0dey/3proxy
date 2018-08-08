@@ -1,0 +1,78 @@
+3proxy
+------
+
+:source-highlighter: highlightjs
+
+In our hard time everyone needs a bit more security. This role helps you
+install fast and powerful 3proxy proxy server
+
+*NB*: If some of your servers use iptables (without ufw/firewalld) — you should put role https://github.com/Nordeus/ansible_iptables_raw[iptables_raw] into library folder next to your playbook
+
+Supported OSes
+~~~~~~~~~~~~~~
+
+[cols=",",options="header",]
+|============================
+|name |version
+.2+|CentOS |6
+|7
+.2+|Ubuntu |xenial
+|bionic
+.3+|Fedora |26
+|27
+|28
+|============================
+
+Role Variables
+~~~~~~~~~~~~~~
+
+[cols=",",options="header",]
+|=======================================================================
+|name |description
+|proxy_users |array of users whch shold have access to proxy (otherwise anybody can)
+|proxy_socks |enable socks proxy (true by default)
+|proxy_socks_port |socks proxy port (1080 be default)
+|proxy_socks_options |additional socks proxy options
+|proxy_http |enable http proxy (true by default)
+|proxy_http_port |http proxy port (3128 be default)
+|proxy_http_options |additional http proxy options
+|manage_firewall |If role should try to allow incoming connections to proxy on firewall
+|=======================================================================
+
+Proxy users
+~~~~~~~~~~~
+
+Proxy user is an object, which consists of 2 fields:
+
+[cols=",",options="header",]
+|==========================
+|name |description
+|name |username
+|hash |hash of the password
+|==========================
+
+Hash can be obtained from command
+`openssl passwd -1 'yourcomplexpasswordHere'`
+
+Example Playbook
+~~~~~~~~~~~~~~~~
+
+[source,yaml]
+----
+- hosts: all
+  roles:
+    - role: 3proxy
+      proxy_users:
+        - { name: "asm0dey", hash: "$1$pL3Ho94u$2.wCxrLfacj82UMPJSy/6/" }
+        - { name: "asm0dey2", hash: "$1$pL3Ho94u$2.wCxrLfacj82UMPJSy/6/" }
+----
+
+Development
+~~~~~~~~~~~
+
+You need to have vagrant, docker, ansible and molecule installed to be able to run tests. Of course you can just implemet what you need without tests, but having tests is always better
+
+License
+~~~~~~~
+
+MIT
