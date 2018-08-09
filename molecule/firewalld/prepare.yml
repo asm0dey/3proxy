@@ -1,0 +1,9 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install python for Ansible
+      raw: which python || (dnf -y update && dnf install -y python)
+      become: true
+      changed_when: false

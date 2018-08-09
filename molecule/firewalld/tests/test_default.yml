@@ -1,0 +1,17 @@
+---
+port:
+  tcp:1080:
+    listening: true
+  tcp:3128:
+    listening: true
+command:
+  firewall-cmd --query-port 1080/tcp:
+    exit-status: 0
+    stdout: ["yes"]
+    stderr: []
+    timeout: 10000
+  firewall-cmd --query-port 3128/tcp:
+    exit-status: 0
+    stdout: ["yes"]
+    stderr: []
+    timeout: 10000
