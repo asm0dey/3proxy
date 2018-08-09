@@ -6,7 +6,7 @@
 In our hard time everyone needs a bit more security. This role helps you
 install fast and powerful 3proxy proxy server
 
-*NB*: If some of your servers use iptables (without ufw/firewalld) — you should put role https://github.com/Nordeus/ansible_iptables_raw[iptables_raw] into library folder next to your playbook
+*NB*: If some of your servers use iptables (without ufw/firewalld) — you should put module https://github.com/Nordeus/ansible_iptables_raw[iptables_raw] into library folder next to your playbook
 
 Supported OSes
 ~~~~~~~~~~~~~~
