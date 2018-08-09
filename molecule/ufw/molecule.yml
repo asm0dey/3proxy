@@ -1,0 +1,28 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+lint:
+  name: yamllint
+platforms:
+  - name: xenial
+    box: ubuntu/xenial64
+    provider_raw_config_args:
+      - "customize ['modifyvm', :id, '--uartmode1', 'disconnected']"
+  - name: bionic
+    box: ubuntu/bionic64
+    provider_raw_config_args:
+      - "customize ['modifyvm', :id, '--uartmode1', 'disconnected']"
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: ufw
+verifier:
+  name: goss
+  lint:
+    name: yamllint

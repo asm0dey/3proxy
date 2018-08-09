@@ -1,0 +1,6 @@
+---
+- name: Converge
+  become: true
+  hosts: all
+  roles:
+    - role: 3proxy

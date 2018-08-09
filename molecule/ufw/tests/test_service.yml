@@ -1,0 +1,21 @@
+---
+package:
+  ufw:
+    installed: true
+port:
+  tcp:1080:
+    listening: true
+  tcp:3128:
+    listening: true
+service:
+  ufw:
+    enabled: true
+    running: true
+command:
+  'grep ''### tuple ###'' /etc/ufw/*.rules':
+    exit-status: 0
+    stdout:
+      - allow tcp 1080
+      - allow tcp 3128
+    stderr: []
+    timeout: 10000
