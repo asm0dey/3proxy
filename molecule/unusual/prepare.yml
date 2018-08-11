@@ -1,0 +1,9 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install python for Ansible
+      raw: (command -v apt && (test -e /usr/bin/python || (apt -y update && apt install -y python-minimal))) || (command -v yum && (command -v python || (yum -y update && yum install -y python)))
+      become: true
+      changed_when: false

@@ -6,5 +6,4 @@
   with_nested:
     - [ { value: "{{ proxy_socks_port }}", if: "{{ proxy_socks }}" }, { value: "{{ proxy_http_port }}", if: "{{ proxy_http }}" } ]
     - [ { ctstate: "NEW,ESTABLISHED", chain: "INPUT", }, { ctstate: "ESTABLISHED", chain: "OUTPUT" } ]
-  notify: update iptables
   when: item[0].if

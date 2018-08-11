@@ -6,8 +6,6 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: centos6
-    image: chrisshort/docker-centos6-ansible
   - name: ubuntu
     image: solita/ubuntu-systemd:latest
     command: /sbin/init
@@ -57,6 +55,7 @@ provisioner:
 scenario:
   name: default
 verifier:
-  name: testinfra
+  name: goss
   lint:
-    name: flake8
+    name: yamllint
+    enabled: false

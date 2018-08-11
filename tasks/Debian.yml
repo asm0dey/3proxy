@@ -1,0 +1,57 @@
+---
+- name: Ensures gpg is installed
+  package:
+    name: gnupg
+
+- name: Ensures iptables-persistent is installed
+  package:
+    name: iptables-persistent
+  when: manage_firewall
+
+- name: Ensures 3proxy repository key is installed
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: D8BAAED4A75968C1
+
+- name: Ensures 3proxy repository is added
+  apt_repository:
+    repo: deb http://ppa.launchpad.net/artyom.h31/3proxy/ubuntu xenial main
+    state: present
+    update_cache: true
+    mode: 0644
+    filename: artyom_h31-ubuntu-3proxy-xenial.list
+
+- name: Ensures 3proxy is installed
+  package:
+    name: 3proxy
+
+- name: Ensures 3proxy log dir exists
+  file:
+    name: /var/log/3proxy
+    state: directory
+    owner: nobody
+    group: nogroup
+
+- name: Configures 3proxy
+  template:
+    src: 3proxy.cfg.j2
+    dest: /etc/3proxy/3proxy.cfg
+    owner: nobody
+    group: nogroup
+  notify: "reload service"
+
+- name: get info about 3proxy service
+  systemd:
+    name: 3proxy.service
+    enabled: true
+  when: ansible_service_mgr == 'systemd'
+  register: proxy_info
+
+- name: Set log directory writable for 3proxy if needed
+  ini_file:
+    path: "{{ proxy_info.status.FragmentPath }}"
+    section: Service
+    option: Type
+    value: forking
+  when: ansible_service_mgr == 'systemd'
+  notify: reload service
