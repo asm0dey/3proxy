@@ -20,6 +20,10 @@ galaxy_info:
         - 26
         - 27
         - 28
+    - name: Debian
+      versions:
+        - stretch
+        - jessie
 
   galaxy_tags:
     - networking

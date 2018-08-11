@@ -1,0 +1,28 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+lint:
+  name: yamllint
+platforms:
+  - name: debian9
+    box: debian/stretch64
+  - name: debian8
+    box: debian/jessie64
+  - name: centos6
+    box: bento/centos-6.10
+    box_version: 201807.12.0
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: unusual
+verifier:
+  name: goss
+  lint:
+    name: yamllint
+    enabled: false

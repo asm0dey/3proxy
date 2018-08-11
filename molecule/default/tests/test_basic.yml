@@ -1,0 +1,20 @@
+---
+port:
+  tcp:1080:
+    listening: true
+  tcp:3128:
+    listening: true
+service:
+  3proxy:
+    enabled: true
+    running: true
+file:
+{{if .Env.OS | regexMatch "([Dd]ebian|[Uu]buntu)"}}
+  /etc/3proxy/3proxy.cfg:
+{{else}}
+  /etc/3proxy.cfg:
+{{end}}
+    exists: true
+    contains:
+     - "!users"
+     - "!auth strong"
